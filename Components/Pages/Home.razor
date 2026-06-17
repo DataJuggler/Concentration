@@ -1,0 +1,182 @@
+﻿@page "/"
+
+@using DataJuggler.Blazor.Components
+@using BlazorStyled
+@using System.Drawing
+@using DataJuggler.BlazorAudio;
+
+<PageTitle>Concentration</PageTitle>
+
+<div class="fullscreen">
+    <ImageComponent ImageUrl="../Images/ConcentrationText.png" Width="330" Height="56" Name="Logo"
+        BorderWidth="0" BorderColor="@Color.Transparent" ClassName="noborder">
+    </ImageComponent>
+</div>
+
+<div class="cardcontainer">
+    <BlazorAudioPlayer Parent="this" Visible="false"></BlazorAudioPlayer>
+    <Label Name="InningLabel" Parent="this" Text="Inning: 0" ClassName="inninglabel"></Label>    
+    <Label Name="TricksLabel" Parent="this" Text="Tricks: 0" ClassName="trickslabel"></Label>
+    <ImageButton ButtonNumber="1" Name="CardButton1" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" Parent="this"
+        Left="16" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="2" Name="CardButton2" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="22.181818" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="3" Name="CardButton3" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="28.363636" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="4" Name="CardButton4" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="34.545454" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="5" Name="CardButton5" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="40.727272" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="6" Name="CardButton6" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="46.90909" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="7" Name="CardButton7" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="53.090908" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="8" Name="CardButton8" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="59.272726" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="9" Name="CardButton9" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="65.454544" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="10" Name="CardButton10" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="71.63636199999999" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="11" Name="CardButton11" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="77.81818" Top="16"></ImageButton>
+    <ImageButton ButtonNumber="12" Name="CardButton12" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="16" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="13" Name="CardButton13" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="22.181818" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="14" Name="CardButton14" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="28.363636" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="15" Name="CardButton15" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="34.545454" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="16" Name="CardButton16" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="40.727272" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="17" Name="CardButton17" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="46.90909" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="18" Name="CardButton18" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="53.090908" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="19" Name="CardButton19" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="59.272726" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="20" Name="CardButton20" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="65.454544" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="21" Name="CardButton21" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="71.63636199999999" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="22" Name="CardButton22" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="77.81818" Top="31.2"></ImageButton>
+    <ImageButton ButtonNumber="23" Name="CardButton23" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="16" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="24" Name="CardButton24" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="22.181818" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="25" Name="CardButton25" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="28.363636" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="26" Name="CardButton26" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="34.545454" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="27" Name="CardButton27" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="40.727272" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="28" Name="CardButton28" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="46.90909" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="29" Name="CardButton29" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="53.090908" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="30" Name="CardButton30" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="59.272726" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="31" Name="CardButton31" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="65.454544" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="32" Name="CardButton32" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="71.63636199999999" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="33" Name="CardButton33" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="77.81818" Top="46.4"></ImageButton>
+    <ImageButton ButtonNumber="34" Name="CardButton34" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="16" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="35" Name="CardButton35" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="22.181818" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="36" Name="CardButton36" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="28.363636" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="37" Name="CardButton37" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="34.545454" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="38" Name="CardButton38" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="40.727272" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="39" Name="CardButton39" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="46.90909" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="40" Name="CardButton40" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="53.090908" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="41" Name="CardButton41" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="59.272726" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="42" Name="CardButton42" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="65.454544" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="43" Name="CardButton43" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="71.63636199999999" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="44" Name="CardButton44" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="77.81818" Top="61.599999999999994"></ImageButton>
+    <ImageButton ButtonNumber="45" Name="CardButton45" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="16" Top="76.8"></ImageButton>
+    <ImageButton ButtonNumber="46" Name="CardButton46" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="22.181818" Top="76.8"></ImageButton>
+    <ImageButton ButtonNumber="47" Name="CardButton47" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="28.363636" Top="76.8"></ImageButton>
+    <ImageButton ButtonNumber="48" Name="CardButton48" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="34.545454" Top="76.8"></ImageButton>
+    <ImageButton ButtonNumber="49" Name="CardButton49" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="40.727272" Top="76.8"></ImageButton>
+    <ImageButton ButtonNumber="50" Name="CardButton50" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="46.90909" Top="76.8"></ImageButton>
+    <ImageButton ButtonNumber="51" Name="CardButton51" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="53.090908" Top="76.8"></ImageButton>
+    <ImageButton ButtonNumber="52" Name="CardButton52" Unit="vw" HeightUnit="vh"
+        Height="12.96" Width="5.21" ClickHandler="@ButtonClicked" Position="fixed" 
+        Parent="this" Left="59.272726" Top="76.8"></ImageButton>
+    <ImageButton Name="NewGameButton" Position="fixed" ClickHandler="@ButtonClicked"
+        ImageUrl="../Images/RedButton.png" TextColor="@Color.White" Unit="vw" 
+        HeightUnit="vh" ButtonNumber="100" Parent="this" Height="4" Width="8" 
+        Left="91.2" Top="92" FontSize="1.28" Text="New Game" 
+        TextLeft="92.32" TextTop="92" TextAlign="center">
+    </ImageButton>
+</div>
