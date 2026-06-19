@@ -42,14 +42,14 @@
     white-space: nowrap;
     text-align: right;
 }
-.noborder 
+.logoimage 
 {
     border: none;
     outline: none;
     position: fixed;    
     left: 50%;
     transform: translateX(-50%);
-    top: 8vh;
+    top: 6.8vh;
 }
 
     .noborder, .noborder * 
