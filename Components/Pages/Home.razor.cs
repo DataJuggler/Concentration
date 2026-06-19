@@ -33,6 +33,7 @@ namespace Concentration.Components.Pages
         private List<CardInfo> cardsTurnedOverThisInning;
         private Dealer dealer;
         private string noBorderStyle;
+        private ToggleComponent soundOption;
         private ImageButton cardButton1;
         private ImageButton cardButton10;
         private ImageButton cardButton11;
@@ -251,22 +252,22 @@ namespace Concentration.Components.Pages
                     // if all four were added
                     if (CardsTurnedOverThisInning.Count == 4)
                     {
-                        // if the Audio Player exists
-                        if (HasAudioPlayer)
+                        // Increment the value for Tricks
+                        Tricks++;
+
+                        // if the value for HasTricksLabel is true
+                        if (HasTricksLabel)
                         {
-                            // Increment the value for Tricks
-                            Tricks++;
+                            // Display the Tricks value                                
+                            TricksLabel.SetTextValue("Tricks: " + Tricks);
 
-                            // if the value for HasTricksLabel is true
-                            if (HasTricksLabel)
-                            {
-                                // Display the Tricks value                                
-                                TricksLabel.SetTextValue("Tricks: " + Tricks);
+                            // Refresh
+                            TricksLabel.Refresh();
+                        }
 
-                                // Refresh
-                                TricksLabel.Refresh();
-                            }
-
+                        // if the Audio Player exists and PlaySound is true
+                        if ((HasAudioPlayer) && (PlaySound))
+                        {
                             // get the current directory
                             string directory = Environment.CurrentDirectory;
 
@@ -808,6 +809,11 @@ namespace Concentration.Components.Pages
             /// </summary>
             public void Register(IBlazorComponent component)
             { 
+                if (component is ToggleComponent tempToggleComponent)
+                {
+                    // Set the SoundOption
+                    SoundOption = tempToggleComponent;    
+                }
                 if (component is BlazorAudioPlayer tempAudioPlayer)
                 {
                     // Set the AudioPlayer
@@ -2664,6 +2670,23 @@ namespace Concentration.Components.Pages
             }
             #endregion
             
+            #region HasSoundOption
+            /// <summary>
+            /// This property returns true if this object has a 'SoundOption'.
+            /// </summary>
+            public bool HasSoundOption
+            {
+                get
+                {
+                    // initial value
+                    bool hasSoundOption = (SoundOption != null);
+
+                    // return value
+                    return hasSoundOption;
+                }
+            }
+            #endregion
+            
             #region HasTricksLabel
             /// <summary>
             /// This property returns true if this object has a 'TricksLabel'.
@@ -2733,6 +2756,42 @@ namespace Concentration.Components.Pages
             {
                 get { return noBorderStyle; }
                 set { noBorderStyle = value; }
+            }
+            #endregion
+            
+            #region PlaySound
+            /// <summary>
+            /// This read only property returns the value of PlaySound from the object SoundOption.
+            /// </summary>
+            public bool PlaySound
+            {
+
+                get
+                {
+                    // initial value
+                    bool playSound = false;
+
+                    // if SoundOption exists
+                    if (SoundOption != null)
+                    {
+                        // set the return value
+                        playSound = SoundOption.On;
+                    }
+
+                    // return value
+                    return playSound;
+                }
+            }
+            #endregion
+
+            #region SoundOption
+            /// <summary>
+            /// This property gets or sets the value for 'SoundOption'.
+            /// </summary>
+            public ToggleComponent SoundOption
+            {
+                get { return soundOption; }
+                set { soundOption = value; }
             }
             #endregion
             

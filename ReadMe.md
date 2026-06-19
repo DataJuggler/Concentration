@@ -52,10 +52,8 @@ get clicked on and nothing happens after. One inning later everything should res
 I didn't spend a lot of time user proofing the app, it's just a simple demo using a deck of cards I created.
 
 # Options
-On my to do list is a adding a toggle component to enable Playing Sound or not. I will add this feature soon.
-I just wanted to release this to see if anyone else finds this game "fun". I find it kind of fun. At the time of this
-writing my best score is 161 innings. If I am tired, it can take me over 300 innings. There's probably a strategy
-to train your brain. I just like to test how my noggin is working.
+I added a ToggleComponent for PlaySound. It defaults to true. If you want to turn the sound off, set On=false
+in the razor markup for the ToggleComponent. Or turn it off once the app starts using the Toggle Component's toggle.
 
 Let me know if you find this game fun or useful by leaving a star please.
 

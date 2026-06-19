@@ -15,6 +15,15 @@
 
 <div class="cardcontainer">
     <BlazorAudioPlayer Parent="this" Visible="false"></BlazorAudioPlayer>
+    <ToggleComponent Name="SoundToggle" Parent="this" Unit="vw" HeightUnit ="vh"
+        Width="8" CircleColor="@Color.Orange" Height="2.4"  Position="fixed" Left="89.2" Top="91"
+        OvalTop=".4" OvalLeft="2" OvalWidth="1.6" OvalHeight="1.4" OvalRadius="50" OvalEndWidth=".4"        
+        CircleLeftOn="-.6"  CircleLeftOff="-2.32" CircleTop=".8" On="true"
+        LabelPosition="relative" LabelLeft="2"LabelTop="0"
+        LabelFontName="Calibri" LabelFontSizeUnit="vh" LabelFontSize="3.2" LabelColor="@Color.LemonChiffon"        
+        CircleWidth=".5" CircleHeight=".7" Caption="Sound: " Column1Width="5.2" Column2Width="2.7"
+        OvalBackgroundColorOn="Color.CornflowerBlue" OvalBackgroundColorOff="@Color.DimGray">
+    </ToggleComponent>
     <Label Name="InningLabel" Parent="this" Text="Inning: 0" ClassName="inninglabel"></Label>    
     <Label Name="TricksLabel" Parent="this" Text="Tricks: 0" ClassName="trickslabel"></Label>
     <ImageButton ButtonNumber="1" Name="CardButton1" Unit="vw" HeightUnit="vh"
@@ -176,7 +185,7 @@
     <ImageButton Name="NewGameButton" Position="fixed" ClickHandler="@ButtonClicked"
         ImageUrl="../Images/RedButton.png" TextColor="@Color.White" Unit="vw" 
         HeightUnit="vh" ButtonNumber="100" Parent="this" Height="4" Width="8" 
-        Left="91.2" Top="92" FontSize="1.28" Text="New Game" 
-        TextLeft="92.32" TextTop="92" TextAlign="center">
+        Left="91.2" Top="95" FontSize="1.28" Text="New Game" 
+        TextLeft="92.32" TextTop="95" TextAlign="center">
     </ImageButton>
 </div>
