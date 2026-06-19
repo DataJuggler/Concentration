@@ -272,7 +272,7 @@ namespace Concentration.Components.Pages
                             string directory = Environment.CurrentDirectory;
 
                             // set the audioFile
-                            string audioFile = Path.Combine(directory, @"wwwroot\Sounds\Success1.mp3");
+                            string audioFile = Path.Combine(directory, @"wwwroot\Sounds\Success1.mp3");                            
 
                             // Set the AudioUrl
                             AudioPlayer.SetAudioUrl(audioFile);
