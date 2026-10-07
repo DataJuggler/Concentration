@@ -3,14 +3,15 @@
 #region using statements
 
 using DataJuggler.Blazor.Components;
+using DataJuggler.Blazor.Components.Enumerations;
 using DataJuggler.Blazor.Components.Interfaces;
+using DataJuggler.BlazorAudio;
 using DataJuggler.PlayingCards;
 using DataJuggler.PlayingCards.Enumerations;
 using DataJuggler.PlayingCards.Objects;
-using System.Runtime.Versioning;
 using DataJuggler.RandomShuffler.Objects;
 using DataJuggler.UltimateHelper;
-using DataJuggler.BlazorAudio;
+using System.Runtime.Versioning;
 
 #endregion
 
@@ -286,27 +287,24 @@ namespace Concentration.Components.Pages
                         // Iterate the collection of ImageButton objects
                         foreach (CardInfo cardInfo in CardsTurnedOverThisInning.ToList())
                         {
-                            // change back to a card back (delayed)
+                            // hide this card
                             cardInfo.CardButton.SetVisible(false);
                         }
 
                         // reset
                         FirstCardTurnedOver = null;
                         CardsTurnedOverThisInning = new List<CardInfo>();
+
+                        // if only 4 cards are left
+                        if (Tricks == 12)
+                        {
+                            // auto solve the last 4 cards
+                            AutoSolve();
+                        }
                     }
                 }
                 else
                 {
-                    //// if the Audio Player exists
-                    //if (HasAudioPlayer)
-                    //{
-                    //    // Set the AudioUrl
-                    //    AudioPlayer.SetAudioUrl(@"C:\Projects\GitHub\Concentration\wwwroot\Failure1.mp3");
-
-                    //    // Play
-                    //    AudioPlayer.PlayOrPause();
-                    //}
-
                     // add this card
                     CardsTurnedOverThisInning.Add(thisCard);
 
@@ -325,8 +323,8 @@ namespace Concentration.Components.Pages
                             // reset
                             tempCard.Exposed = false;
 
-                            // change back to a card back (delayed)
-                            _ = cardInfo.CardButton.SetImageUrlWithDelay(Dealer.CardBackImage.Path, 1600);
+                            // change back to a card back
+                            cardInfo.CardButton.SetImageUrlWithDelay(Dealer.CardBackImage.Path, 1600);
                         }
                     }
 
@@ -336,8 +334,6 @@ namespace Concentration.Components.Pages
                     // reset
                     CardsTurnedOverThisInning = new List<CardInfo>();
                 }
-
-                
             }
         }
         #endregion
@@ -345,6 +341,50 @@ namespace Concentration.Components.Pages
         #endregion
         
         #region Methods
+
+            #region AutoSolve()
+            /// <summary>
+            /// This method turns over the last 4 cards, awards the final trick and slides the cards off the screen
+            /// </summary>
+            public void AutoSolve()
+            {
+                // get the cards still on the table
+                List<ImageButton> remainingCards = Enumerable.Range(1, 52).Select(x => GetCardButton(x)).Where(x => (x != null) && (x.Visible)).ToList();
+
+                // if exactly 4 cards are left
+                if (ListHelper.HasExactlyXItems(remainingCards, 4))
+                {
+                    // Iterate the collection of ImageButton objects
+                    foreach (ImageButton cardButton in remainingCards)
+                    {
+                        // get the card
+                        Card card = Dealer.Shuffler.Cards[cardButton.ButtonNumber - 1];
+
+                        // turn it face up
+                        card.Exposed = true;
+                        Dealer.LoadCard(card);
+                        cardButton.SetImageUrl(card.Path);
+
+                        // wait 1 second so the player can see the cards, then slide
+                        cardButton.SetAnimationDelay(1);
+                        cardButton.StartAnimation();
+                    }
+
+                    // Increment the value for Tricks
+                    Tricks++;
+
+                    // if the value for HasTricksLabel is true
+                    if (HasTricksLabel)
+                    {
+                        // Display the Tricks value
+                        TricksLabel.SetTextValue("Tricks: " + Tricks);
+
+                        // Refresh
+                        TricksLabel.Refresh();
+                    }
+                }
+            }
+            #endregion
             
             #region GetImageButton()
             /// <summary>
@@ -824,224 +864,247 @@ namespace Concentration.Components.Pages
                 }
                 if (component is ImageButton tempImageButton)
                 {
-                    if (tempImageButton.ButtonNumber < 100)
+                    if (tempImageButton.ButtonNumber >= 100)
+                    {
+                        // store the ImageButton components
+                        if (component.Name == "NewGameButton")
+                        {
+                            // register the new card button
+                            NewGameButton = tempImageButton;
+                        }                        
+                    }
+                    else
                     {
                         // hide all the card buttons for now
                         tempImageButton.SetVisible(false);
-                    }
 
-                    // store the ImageButton components
-                    if (component.Name == "NewGameButton")
-                    {
-                        NewGameButton = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton9")
-                    {
-                        CardButton9 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton8")
-                    {
-                        CardButton8 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton7")
-                    {
-                        CardButton7 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton6")
-                    {
-                        CardButton6 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton51")
-                    {
-                        CardButton51 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton52")
-                    {
-                        CardButton52 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton50")
-                    {
-                        CardButton50 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton5")
-                    {
-                        CardButton5 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton49")
-                    {
-                        CardButton49 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton48")
-                    {
-                        CardButton48 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton47")
-                    {
-                        CardButton47 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton46")
-                    {
-                        CardButton46 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton45")
-                    {
-                        CardButton45 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton44")
-                    {
-                        CardButton44 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton43")
-                    {
-                        CardButton43 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton42")
-                    {
-                        CardButton42 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton41")
-                    {
-                        CardButton41 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton40")
-                    {
-                        CardButton40 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton4")
-                    {
-                        CardButton4 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton39")
-                    {
-                        CardButton39 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton38")
-                    {
-                        CardButton38 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton37")
-                    {
-                        CardButton37 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton36")
-                    {
-                        CardButton36 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton35")
-                    {
-                        CardButton35 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton34")
-                    {
-                        CardButton34 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton33")
-                    {
-                        CardButton33 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton32")
-                    {
-                        CardButton32 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton31")
-                    {
-                        CardButton31 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton30")
-                    {
-                        CardButton30 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton3")
-                    {
-                        CardButton3 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton29")
-                    {
-                        CardButton29 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton28")
-                    {
-                        CardButton28 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton27")
-                    {
-                        CardButton27 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton26")
-                    {
-                        CardButton26 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton25")
-                    {
-                        CardButton25 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton24")
-                    {
-                        CardButton24 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton23")
-                    {
-                        CardButton23 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton22")
-                    {
-                        CardButton22 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton21")
-                    {
-                        CardButton21 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton20")
-                    {
-                        CardButton20 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton2")
-                    {
-                        CardButton2 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton19")
-                    {
-                        CardButton19 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton18")
-                    {
-                        CardButton18 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton17")
-                    {
-                        CardButton17 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton16")
-                    {
-                        CardButton16 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton15")
-                    {
-                        CardButton15 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton14")
-                    {
-                        CardButton14 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton13")
-                    {
-                        CardButton13 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton12")
-                    {
-                        CardButton12 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton11")
-                    {
-                        CardButton11 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton10")
-                    {
-                        CardButton10 = tempImageButton;
-                    }
-                    else if (component.Name == "CardButton1")
-                    {
-                        CardButton1 = tempImageButton;
+                        // wiring up animation
+
+                        // enable animation
+                        tempImageButton.SetAnimatable(true);
+
+                        // slide right, far enough to clear the screen                       
+                        tempImageButton.SetAnimationDirection(AnimationDirectionEnum.Right);
+                        tempImageButton.SetSlideDistance(110);
+
+                        // take 3 seconds to slide off
+                        tempImageButton.SetAnimationDuration(5);
+
+                        // no delay
+                        tempImageButton.SetAnimationDelay(0);
+
+                        // hide the card when it finishes
+                        tempImageButton.SetHideOnAnimationEnd(true);
+                    
+                        // determine the action by the image number
+                        if (component.Name == "CardButton9")
+                        {
+                            CardButton9 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton8")
+                        {
+                            CardButton8 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton7")
+                        {
+                            CardButton7 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton6")
+                        {
+                            CardButton6 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton51")
+                        {
+                            CardButton51 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton52")
+                        {
+                            CardButton52 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton50")
+                        {
+                            CardButton50 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton5")
+                        {
+                            CardButton5 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton49")
+                        {
+                            CardButton49 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton48")
+                        {
+                            CardButton48 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton47")
+                        {
+                            CardButton47 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton46")
+                        {
+                            CardButton46 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton45")
+                        {
+                            CardButton45 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton44")
+                        {
+                            CardButton44 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton43")
+                        {
+                            CardButton43 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton42")
+                        {
+                            CardButton42 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton41")
+                        {
+                            CardButton41 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton40")
+                        {
+                            CardButton40 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton4")
+                        {
+                            CardButton4 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton39")
+                        {
+                            CardButton39 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton38")
+                        {
+                            CardButton38 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton37")
+                        {
+                            CardButton37 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton36")
+                        {
+                            CardButton36 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton35")
+                        {
+                            CardButton35 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton34")
+                        {
+                            CardButton34 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton33")
+                        {
+                            CardButton33 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton32")
+                        {
+                            CardButton32 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton31")
+                        {
+                            CardButton31 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton30")
+                        {
+                            CardButton30 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton3")
+                        {
+                            CardButton3 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton29")
+                        {
+                            CardButton29 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton28")
+                        {
+                            CardButton28 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton27")
+                        {
+                            CardButton27 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton26")
+                        {
+                            CardButton26 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton25")
+                        {
+                            CardButton25 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton24")
+                        {
+                            CardButton24 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton23")
+                        {
+                            CardButton23 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton22")
+                        {
+                            CardButton22 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton21")
+                        {
+                            CardButton21 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton20")
+                        {
+                            CardButton20 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton2")
+                        {
+                            CardButton2 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton19")
+                        {
+                            CardButton19 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton18")
+                        {
+                            CardButton18 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton17")
+                        {
+                            CardButton17 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton16")
+                        {
+                            CardButton16 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton15")
+                        {
+                            CardButton15 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton14")
+                        {
+                            CardButton14 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton13")
+                        {
+                            CardButton13 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton12")
+                        {
+                            CardButton12 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton11")
+                        {
+                            CardButton11 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton10")
+                        {
+                            CardButton10 = tempImageButton;
+                        }
+                        else if (component.Name == "CardButton1")
+                        {
+                            CardButton1 = tempImageButton;
+                        }
                     }
                 }
                 else if (component is ImageComponent tempImageComponent)
