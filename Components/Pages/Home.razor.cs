@@ -888,7 +888,7 @@ namespace Concentration.Components.Pages
                         tempImageButton.SetSlideDistance(110);
 
                         // take 3 seconds to slide off
-                        tempImageButton.SetAnimationDuration(5);
+                        tempImageButton.SetAnimationDuration(10);
 
                         // no delay
                         tempImageButton.SetAnimationDelay(0);
