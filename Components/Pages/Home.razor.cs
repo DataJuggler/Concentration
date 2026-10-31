@@ -100,11 +100,8 @@ namespace Concentration.Components.Pages
         /// </summary>
         public Home()
         {
-            // Create the Dealer object
-            Dealer = new Dealer(PlatformEnum.Blazor, DeckEnum.TheGildedDeck, CardBackEnum.EmeraldLabyrinth);
-
-            // Create the list
-            CardsTurnedOverThisInning = new List<CardInfo>();
+            // Perform initializations for this object
+            Init();
         }
         #endregion
 
@@ -116,64 +113,20 @@ namespace Concentration.Components.Pages
         /// </summary>
         public void ButtonClicked(int buttonNumber, string buttonText)
         {
-            // if the new game button was cleared
+            // if the new game button was clicked
             if (buttonNumber == 100)
             {
-                if (HasDealer)
-                {
-                    // Reset
-                    Inning = 0;
-                    Tricks = 0;
+                // Reset the game state (creates a new Dealer)
+                Init();
 
-                    // if the InningLabel exists
-                    if (HasInningLabel)
-                    {
-                        // Display the Inning value
-                        InningLabel.SetTextValue("Inning: " + Inning);
+                // Shuffle the cards
+                Dealer.Shuffle();
 
-                        // Refresh
-                        InningLabel.Refresh();
-                    }
+                // Reset the cards and card buttons
+                ResetCards();
 
-                    // if the value for HasTricksLabel is true
-                    if (HasTricksLabel)
-                    {
-                        // Display the Tricks value
-                        TricksLabel.SetTextValue("Tricks: " + Tricks);
-
-                        // Refresh
-                        TricksLabel.Refresh();
-                    }
-
-                    // Shuffle the cards
-                    Dealer.Shuffle();
-
-                    for (int x = 1; x <= 52; x++)
-                    {
-                        // get this card
-                        Card card = Dealer.Shuffler.Cards[x - 1];
-
-                        // if the card exists
-                        if (NullHelper.Exists(card))
-                        {
-                            // not exposed
-                            card.Exposed = false;
-
-                            // find the card button
-                            ImageButton cardButton = this.GetCardButton(x);
-
-                            // if the button was found
-                            if (NullHelper.Exists(cardButton))
-                            {
-                                // set the image url
-                                cardButton.SetImageUrl(Dealer.CardBackImage.Path);
-
-                                // show this card
-                                cardButton.SetVisible(true);                        
-                            }
-                        }
-                    }
-                }
+                // Display Inning: 0 and Tricks: 0
+                DisplayLabels();
             }
             else
             {
@@ -365,6 +318,15 @@ namespace Concentration.Components.Pages
                         Dealer.LoadCard(card);
                         cardButton.SetImageUrl(card.Path);
 
+                        // make sure animation is enabled
+                        cardButton.SetAnimatable(true);
+
+                        // slide far enough to clear the screen
+                        cardButton.SetSlideDistance(110);
+
+                        // hide the card when it finishes
+                        cardButton.SetHideOnAnimationEnd(true);
+
                         // wait 1 second so the player can see the cards, then slide
                         cardButton.SetAnimationDelay(1);
                         cardButton.StartAnimation();
@@ -382,6 +344,34 @@ namespace Concentration.Components.Pages
                         // Refresh
                         TricksLabel.Refresh();
                     }
+                }
+            }
+            #endregion
+
+            #region DisplayLabels()
+            /// <summary>
+            /// Displays the current Inning and Tricks values
+            /// </summary>
+            public void DisplayLabels()
+            {
+                // if the InningLabel exists
+                if (HasInningLabel)
+                {
+                    // Display the Inning value
+                    InningLabel.SetTextValue("Inning: " + Inning);
+
+                    // Refresh
+                    InningLabel.Refresh();
+                }
+
+                // if the TricksLabel exists
+                if (HasTricksLabel)
+                {
+                    // Display the Tricks value
+                    TricksLabel.SetTextValue("Tricks: " + Tricks);
+
+                    // Refresh
+                    TricksLabel.Refresh();
                 }
             }
             #endregion
@@ -818,6 +808,23 @@ namespace Concentration.Components.Pages
                 return cardButton;
             }
             #endregion
+
+            #region Init()
+            /// <summary>
+            /// This method performs initializations for this object (game state only)
+            /// </summary>
+            public void Init()
+            {
+                // Create the Dealer object
+                Dealer = new Dealer(PlatformEnum.Blazor, DeckEnum.TheGildedDeck, CardBackEnum.EmeraldLabyrinth);
+
+                // Reset
+                Inning = 0;
+                Tricks = 0;
+                FirstCardTurnedOver = null;
+                CardsTurnedOverThisInning = new List<CardInfo>();
+            }
+            #endregion
             
             #region ReceiveData(Message message)
             /// <summary>
@@ -888,7 +895,7 @@ namespace Concentration.Components.Pages
                         tempImageButton.SetSlideDistance(110);
 
                         // take 3 seconds to slide off
-                        tempImageButton.SetAnimationDuration(10);
+                        tempImageButton.SetAnimationDuration(7);
 
                         // no delay
                         tempImageButton.SetAnimationDelay(0);
@@ -1133,6 +1140,49 @@ namespace Concentration.Components.Pages
             }
             #endregion
 
+            #region ResetCards()
+            /// <summary>
+            /// Resets every card and every card button for a new game
+            /// </summary>
+            public void ResetCards()
+            {
+                if ((HasDealer) && (Dealer.HasShuffler) && (Dealer.Shuffler.HasCards))
+                {
+                    for (int x = 1; x <= 52; x++)
+                    {
+                        // get this card
+                        Card card = Dealer.Shuffler.Cards[x - 1];
+
+                        // if the card exists
+                        if (NullHelper.Exists(card))
+                        {
+                            // not exposed
+                            card.Exposed = false;
+                        }
+
+                        // find the card button
+                        ImageButton cardButton = GetCardButton(x);
+
+                        // if the button was found
+                        if (NullHelper.Exists(cardButton))
+                        {
+                            // stop animating                            
+                            cardButton.StopAnimation();
+
+                            // erase
+                            cardButton.SetSlideDistance(0);
+                            
+                            // show the card back
+                            cardButton.SetImageUrl(Dealer.CardBackImage.Path);
+
+                            // show this card
+                            cardButton.SetVisible(true);
+                        }
+                    }
+                }
+            }
+            #endregion
+            
         #endregion
         
         #region Properties
