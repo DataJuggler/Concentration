@@ -27,6 +27,7 @@ namespace Concentration.Components.Pages
     {
         
         #region Private Variables
+        private List<ImageButton> cards;
         private int consectutiveCards;
         private int inning;
         private int tricks;
@@ -90,6 +91,7 @@ namespace Concentration.Components.Pages
         private BlazorAudioPlayer audioPlayer;
         private ImageComponent logo;
         private ImageButton newGameButton;
+        private ImageButton exposeCardsButton;        
         private Label inningLabel;
         private Label tricksLabel;
         #endregion
@@ -127,6 +129,29 @@ namespace Concentration.Components.Pages
 
                 // Display Inning: 0 and Tricks: 0
                 DisplayLabels();
+            }
+            else if (buttonNumber == 101)
+            {
+                // Expose Cards Toggle
+                if (HasExposeCardsButton)
+                {
+                    if (ExposeCardsButton.Text == "Expose Cards")
+                    {
+                        // toggle the text
+                        ExposeCardsButton.SetText("Hide Cards");
+
+                        // Expose all the cards
+                        ExposeCards(true);
+                    }
+                    else
+                    {
+                        // toggle the text
+                        ExposeCardsButton.SetText("Expose Cards");
+
+                        // Show the card backs again
+                        ExposeCards(false);
+                    }
+                }
             }
             else
             {
@@ -372,6 +397,23 @@ namespace Concentration.Components.Pages
 
                     // Refresh
                     TricksLabel.Refresh();
+                }
+            }
+            #endregion
+            
+            #region ExposeCards(bool expose)
+            /// <summary>
+            /// Expose Cards
+            /// </summary>
+            public void ExposeCards(bool expose)
+            {
+                if (expose)
+                {
+                    
+                }
+                else
+                {   
+
                 }
             }
             #endregion
@@ -823,6 +865,13 @@ namespace Concentration.Components.Pages
                 Tricks = 0;
                 FirstCardTurnedOver = null;
                 CardsTurnedOverThisInning = new List<CardInfo>();
+
+                // if the cards do not exist
+                if (!HasCards)
+                {
+                    // erase
+                    Cards = new List<ImageButton>();
+                }
             }
             #endregion
             
@@ -876,9 +925,14 @@ namespace Concentration.Components.Pages
                         // store the ImageButton components
                         if (component.Name == "NewGameButton")
                         {
-                            // register the new card button
+                            // register the NewGameButton
                             NewGameButton = tempImageButton;
-                        }                        
+                        }
+                        else if (component.Name == "ExposeCardsButton")
+                        {
+                            // register the ExposeCardsButton
+                            ExposeCardsButton = tempImageButton;
+                        }
                     }
                     else
                     {
@@ -1168,6 +1222,9 @@ namespace Concentration.Components.Pages
                         {
                             // stop animating                            
                             cardButton.StopAnimation();
+
+                            // Set the card
+                            cardButton.Tag = card;
 
                             // erase
                             cardButton.SetSlideDistance(0);
@@ -1770,6 +1827,17 @@ namespace Concentration.Components.Pages
             }
             #endregion
             
+            #region Cards
+            /// <summary>
+            /// This property gets or sets the value for 'Cards'.
+            /// </summary>
+            public List<ImageButton> Cards
+            {
+                get { return cards; }
+                set { cards = value; }
+            }
+            #endregion
+            
             #region CardsTurnedOverThisInning
             /// <summary>
             /// This property gets or sets the value for 'CardsTurnedOverThisInning'.
@@ -1800,6 +1868,17 @@ namespace Concentration.Components.Pages
             {
                 get { return dealer; }
                 set { dealer = value; }
+            }
+            #endregion
+            
+            #region ExposeCardsButton
+            /// <summary>
+            /// This property gets or sets the value for 'ExposeCardsButton'.
+            /// </summary>
+            public ImageButton ExposeCardsButton
+            {
+                get { return exposeCardsButton; }
+                set { exposeCardsButton = value; }
             }
             #endregion
             
@@ -2715,6 +2794,23 @@ namespace Concentration.Components.Pages
             }
             #endregion
             
+            #region HasCards
+            /// <summary>
+            /// This property returns true if this object has a 'Cards'.
+            /// </summary>
+            public bool HasCards
+            {
+                get
+                {
+                    // initial value
+                    bool hasCards = (Cards != null);
+
+                    // return value
+                    return hasCards;
+                }
+            }
+            #endregion
+            
             #region HasCardsTurnedOverThisInning
             /// <summary>
             /// This property returns true if this object has a 'CardsTurnedOverThisInning'.
@@ -2745,6 +2841,23 @@ namespace Concentration.Components.Pages
 
                     // return value
                     return hasDealer;
+                }
+            }
+            #endregion
+            
+            #region HasExposeCardsButton
+            /// <summary>
+            /// This property returns true if this object has an 'ExposeCardsButton'.
+            /// </summary>
+            public bool HasExposeCardsButton
+            {
+                get
+                {
+                    // initial value
+                    bool hasExposeCardsButton = (ExposeCardsButton != null);
+
+                    // return value
+                    return hasExposeCardsButton;
                 }
             }
             #endregion
