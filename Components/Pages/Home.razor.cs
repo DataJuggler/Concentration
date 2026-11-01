@@ -118,17 +118,8 @@ namespace Concentration.Components.Pages
             // if the new game button was clicked
             if (buttonNumber == 100)
             {
-                // Reset the game state (creates a new Dealer)
-                Init();
-
-                // Shuffle the cards
-                Dealer.Shuffle();
-
-                // Reset the cards and card buttons
-                ResetCards();
-
-                // Display Inning: 0 and Tricks: 0
-                DisplayLabels();
+                // Call New Game
+                NewGame();
             }
             else if (buttonNumber == 101)
             {
@@ -178,6 +169,9 @@ namespace Concentration.Components.Pages
                     {
                         // Load this Card (Sets the Path)
                         Dealer.LoadCard(card);
+
+                        // Set the card
+                        cardButton.Tag = card;
 
                         // get the path to this card
                         string path = card.Path;
@@ -407,13 +401,37 @@ namespace Concentration.Components.Pages
             /// </summary>
             public void ExposeCards(bool expose)
             {
-                if (expose)
+                // if the value for HasCards is true
+                if ((HasCards) && (HasDealer))
                 {
-                    
-                }
-                else
-                {   
+                    // Iterate the collection of ImageButton objects
+                    foreach (ImageButton cardButton in Cards)
+                    {
+                        // if the value for expose is true
+                        if (expose)
+                        {
+                            // get the card
+                            Card card = cardButton.Tag as Card;
 
+                            // If the card object exists
+                            if (NullHelper.Exists(card))
+                            {
+                                // get the path for this card
+                                string path = Dealer.GetCardPath(card);
+
+                                // Show this card
+                                cardButton.SetImageUrl(path);
+
+                                // Show this card
+                                cardButton.SetVisible(true);
+                            }
+                        }
+                        else
+                        {   
+                            // show the card back
+                            cardButton.SetImageUrl(Dealer.CardBackImage.Path);
+                        }
+                    }
                 }
             }
             #endregion
@@ -875,6 +893,26 @@ namespace Concentration.Components.Pages
             }
             #endregion
             
+            #region NewGame()
+            /// <summary>
+            /// New Game
+            /// </summary>
+            public void NewGame()
+            {
+                // Reset the game state (creates a new Dealer)
+                Init();
+
+                // Shuffle the cards
+                Dealer.Shuffle();
+
+                // Reset the cards and card buttons
+                ResetCards();
+
+                // Display Inning: 0 and Tricks: 0
+                DisplayLabels();
+            }
+            #endregion
+            
             #region ReceiveData(Message message)
             /// <summary>
             /// This method is used to receive messages from other components or pages
@@ -938,6 +976,9 @@ namespace Concentration.Components.Pages
                     {
                         // hide all the card buttons for now
                         tempImageButton.SetVisible(false);
+
+                        // Add this card
+                        this.Cards.Add(tempImageButton);
 
                         // wiring up animation
 
@@ -1223,6 +1264,9 @@ namespace Concentration.Components.Pages
                             // stop animating                            
                             cardButton.StopAnimation();
 
+                            // remove this
+                            cardButton.SetHideOnAnimationEnd(false);
+
                             // Set the card
                             cardButton.Tag = card;
 
@@ -1230,9 +1274,9 @@ namespace Concentration.Components.Pages
                             cardButton.SetSlideDistance(0);
                             
                             // show the card back
-                            cardButton.SetImageUrl(Dealer.CardBackImage.Path);
+                            cardButton.SetImageUrl(Dealer.CardBackImage.Path);                            
 
-                            // show this card
+                             // show this card
                             cardButton.SetVisible(true);
                         }
                     }
