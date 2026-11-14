@@ -57,3 +57,5 @@ in the razor markup for the ToggleComponent. Or turn it off once the app starts 
 
 Let me know if you find this game fun or useful by leaving a star please.
 
+# Updates
+11.14.2026: This project has been updated to .NET 11

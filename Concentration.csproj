@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
@@ -16,10 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.Blazor.Components" Version="10.3.10" />
-    <PackageReference Include="DataJuggler.BlazorAudio" Version="10.0.1" />
-    <PackageReference Include="DataJuggler.PlayingCards" Version="10.3.0" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+    <PackageReference Include="DataJuggler.Blazor.Components" Version="11.0.3" />
+    <PackageReference Include="DataJuggler.BlazorAudio" Version="11.0.0" />
+    <PackageReference Include="DataJuggler.PlayingCards" Version="11.0.0" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
