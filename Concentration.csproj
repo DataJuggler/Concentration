@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DataJuggler.Blazor.Components" Version="11.0.3" />
+    <PackageReference Include="DataJuggler.Blazor.Components" Version="11.1.19" />
     <PackageReference Include="DataJuggler.BlazorAudio" Version="11.0.0" />
     <PackageReference Include="DataJuggler.PlayingCards" Version="11.0.0" />
     <PackageReference Include="System.Security.Cryptography.Pkcs" Version="11.0.0" />
