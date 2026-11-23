@@ -353,6 +353,14 @@ namespace Concentration.Components.Pages
 
                     // Increment the value for Tricks
                     Tricks++;
+                    Inning++;
+
+                    // if the value for HasInningLabel is true
+                    if (HasInningLabel)
+                    {
+                        // Display the Inning
+                        InningLabel.SetTextValue("Inning: " + Inning);
+                    }
 
                     // if the value for HasTricksLabel is true
                     if (HasTricksLabel)
