@@ -351,7 +351,7 @@ namespace Concentration.Components.Pages
                         cardButton.StartAnimation();
                     }
 
-                    // Increment the value for Tricks
+                    // Increment the value for Tricks and Inning
                     Tricks++;
                     Inning++;
 
@@ -360,6 +360,9 @@ namespace Concentration.Components.Pages
                     {
                         // Display the Inning
                         InningLabel.SetTextValue("Inning: " + Inning);
+
+                        // Refresh
+                        InningLabel.Refresh();
                     }
 
                     // if the value for HasTricksLabel is true
