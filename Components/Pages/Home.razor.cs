@@ -11,6 +11,7 @@ using DataJuggler.PlayingCards.Enumerations;
 using DataJuggler.PlayingCards.Objects;
 using DataJuggler.RandomShuffler.Objects;
 using DataJuggler.UltimateHelper;
+using System.Drawing;
 using System.Runtime.Versioning;
 
 #endregion
@@ -94,6 +95,10 @@ namespace Concentration.Components.Pages
         private ImageButton exposeCardsButton;        
         private Label inningLabel;
         private Label tricksLabel;
+        private bool selecting;
+        private Point selectionStart;
+        private Point selectionEnd;
+        private bool selectionVisible;
         #endregion
 
         #region Constructor
@@ -3065,6 +3070,50 @@ namespace Concentration.Components.Pages
             }
             #endregion
 
+            #region Selecting
+            /// <summary>
+            /// This property gets or sets the value for 'Selecting'.
+            /// </summary>
+            public bool Selecting
+            {
+                get { return selecting; }
+                set { selecting = value; }
+            }
+            #endregion
+            
+            #region SelectionEnd
+            /// <summary>
+            /// This property gets or sets the value for 'SelectionEnd'.
+            /// </summary>
+            public Point SelectionEnd
+            {
+                get { return selectionEnd; }
+                set { selectionEnd = value; }
+            }
+            #endregion
+            
+            #region SelectionStart
+            /// <summary>
+            /// This property gets or sets the value for 'SelectionStart'.
+            /// </summary>
+            public Point SelectionStart
+            {
+                get { return selectionStart; }
+                set { selectionStart = value; }
+            }
+            #endregion
+            
+            #region SelectionVisible
+            /// <summary>
+            /// This property gets or sets the value for 'SelectionVisible'.
+            /// </summary>
+            public bool SelectionVisible
+            {
+                get { return selectionVisible; }
+                set { selectionVisible = value; }
+            }
+            #endregion
+            
             #region SoundOption
             /// <summary>
             /// This property gets or sets the value for 'SoundOption'.
